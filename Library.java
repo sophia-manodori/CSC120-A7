@@ -1,13 +1,43 @@
 import java.util.Hashtable;
 import java.util.Enumeration;
 public class Library extends Building{
-    public Hashtable<String, Boolean> collection;
-
-    public Library(String name, String address, int nFloors) {
-      super(name, address, nFloors);
+    public Hashtable<String, Boolean> collection;  //collection of books
+    
+    /**
+     * Constructor with all attributes
+     * @param name
+     * @param hasElevator
+     * @param address
+     * @param nFloors
+     */
+    public Library(String name, boolean hasElevator, String address, int nFloors) {
+      super(name, hasElevator, address, nFloors);
       this.collection= new Hashtable<String, Boolean>();
       System.out.println("You have built a library");
     }
+    /**
+     * constructor without specified floors 
+     * @param name
+     * @param hasElevator
+     * @param address
+     */
+    public Library(String name, boolean hasElevator, String address) {
+      super(name, hasElevator, address);
+      this.collection= new Hashtable<String, Boolean>();
+      System.out.println("You have built a library");
+    }
+
+    /**
+     * constructor with no elevator or floors
+     * @param name
+     * @param address
+     */
+    public Library(String name, String address){
+      super(name, false, address);
+      this.collection= new Hashtable<String, Boolean>();
+      System.out.println("You have built a library");
+    }
+
     /**
      * adds a title to the hashtable
      * @param title
@@ -75,8 +105,17 @@ public class Library extends Building{
       }
       return this.collection.get(title);
     }
+
     /**
-     * this wont print!!
+     * prints all methods of the class
+     */
+    public void showOptions() {
+      super.showOptions();
+      System.out.println("\n + contansTitle(t) \n + returnBook(t)  \n + checkOut(t) \n + removeTitle(t) \n + addTitle(t)");
+    }
+
+    /**
+     * prints the collection
      */
     public void printCollection(){
       Enumeration<String> e = this.collection.keys();
@@ -92,7 +131,7 @@ public class Library extends Building{
     }
 
     public static void main(String[] args) {
-      Library forbes = new Library("Forbes Library", "Green Street", 4);
+      Library forbes = new Library("Forbes Library",true, "Green Street", 4);
       forbes.addTitle("LOTR");
       forbes.addTitle("Harry Potter");
       forbes.addTitle("Name of the Wind");
