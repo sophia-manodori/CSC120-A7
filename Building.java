@@ -4,10 +4,11 @@ public class Building {
     protected String address;
     protected int nFloors;
     protected int activeFloor = -1; // Default value indicating we are not inside this building
+    protected boolean hasElevator = false; 
 
     /* Default constructor */
     public Building() {
-        this("<Name Unknown>", "<Address Unknown>", 1);
+        this("<Name Unknown>", false, "<Address Unknown>", 1);
     }
 
     /* Overloaded constructor with address only */
@@ -17,11 +18,22 @@ public class Building {
     }
 
     /* Overloaded constructor with name, address */
-    public Building(String name, String address) {
-        this(name, address, 1); // Call full constructor with hard-coded # floors
+    public Building(String name, boolean hasElevator, String address) {
+        this(name, false, address, 1); // Call full constructor with hard-coded # floors
+        this.hasElevator = hasElevator;
     }
 
     /* Full constructor */
+    public Building(String name, boolean hasElevator, String address, int nFloors) {
+        if (name != null) { this.name = name; }
+        if (address != null) { this.address = address; } 
+        if (nFloors < 1) {
+            throw new RuntimeException("Cannot construct a building with fewer than 1 floor.");
+        }
+        this.nFloors = nFloors;
+        this.hasElevator = hasElevator;
+    }
+
     public Building(String name, String address, int nFloors) {
         if (name != null) { this.name = name; }
         if (address != null) { this.address = address; } 
@@ -70,6 +82,9 @@ public class Building {
         if (this.activeFloor == -1) {
             throw new RuntimeException("You are not inside this Building. Must call enter() before navigating between floors.");
         }
+        if (!this.hasElevator){
+            throw new RuntimeException("There is no elevator so you cannot go up");
+        }
         if (floorNum < 1 || floorNum > this.nFloors) {
             throw new RuntimeException("Invalid floor number. Valid range for this Building is 1-" + this.nFloors +".");
         }
@@ -98,7 +113,7 @@ public class Building {
         System.out.println("Test of Building constructor/methods");
         System.out.println("------------------------------------");
         
-        Building fordHall = new Building("Ford Hall", "100 Green Street Northampton, MA 01063", 4);
+        Building fordHall = new Building("Ford Hall", true, "00 Green Street Northampton, MA 01063", 4);
         System.out.println(fordHall);
         fordHall.showOptions();
 

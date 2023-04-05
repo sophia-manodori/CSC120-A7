@@ -7,7 +7,19 @@ public class Cafe extends Building{
     private int nCups; // The number of cups remaining in inventory
 
     public Cafe(String name, String address, int nFloors) {
-        super(name, address, nFloors);
+        super(name, false, address, nFloors); 
+        this.nCoffeeOunces= 50;
+        this.nSugarPackets=20;
+        this.nCreams=20;
+        this.nCups=20;
+    }
+    /**
+     * for one floor
+     * @param name
+     * @param address
+     */
+    public Cafe(String name, String address) {
+        super(name, false, address);
         this.nCoffeeOunces= 50;
         this.nSugarPackets=20;
         this.nCreams=20;
@@ -33,7 +45,53 @@ public class Cafe extends Building{
         this.nCups = this.nCups-1;
         System.out.println("you've sold a coffee");
     }
+    /**
+     * if people want just black coffee 
+     * @param size
+     */
+    public void sellCoffee(int size) {
+        if(this.nCoffeeOunces<size) {
+            this.restock(size, 0, 0, 0);
+        }
+        if(this.nCups<1) {
+            this.restock(0, 0, 0, 20);
+        }
+        this.nCoffeeOunces = this.nCoffeeOunces- size;
+        this.nCups = this.nCups-1;
+        System.out.println("you've sold a coffee");
+    }
+    /**
+     * throws runtime exception
+     */
+    public void goUp() {
+        throw new RuntimeException("You can't go up this is a cafe.");
+    }
+    /**
+     * throws runtime exception
+     */
+    public void goDown() {
+        throw new RuntimeException("You can't go down this is a cafe.");
+    }
+    /**
+     * throws runtime exception
+     */
+    public void goToFloor(int floorNum) {
+        throw new RuntimeException("You can't change floors this is a cafe.");
+    }
+    /**
+     * prints modified options (overided) 
+     */
+    public void showOptions() {
+        System.out.println("Available options at " + this.name + ":\n + enter() \n + exit() \n + sellCoffee(size, nsugar, ncream");
+    }
 
+    /**
+     * restocks by given amounts
+     * @param coffee
+     * @param nSugar
+     * @param nCream
+     * @param cups
+     */
     private void restock(int coffee, int nSugar, int nCream, int cups) {
         this.nCoffeeOunces+= coffee;
         this.nSugarPackets+=nSugar;

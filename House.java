@@ -1,11 +1,44 @@
 import java.util.ArrayList;
 public class House extends Building{
-  private ArrayList<String> residents;
-  private boolean hasDiningRoom;
+  private ArrayList<String> residents; //array or residents 
+  private boolean hasDiningRoom;  //whether or not it has a dining room
 
-  public House(String name, String address, int nFloors, boolean hasDining) {
-    super(name, address, nFloors);
+  /**
+   * constructor with all attributes
+   * @param name
+   * @param address
+   * @param nFloors
+   * @param hasDining
+   * @param hasElevator
+   */
+  public House(String name, String address, int nFloors, boolean hasDining, boolean hasElevator) {
+    super(name, hasElevator, address, nFloors);
     this.hasDiningRoom = hasDining;
+    this.residents= new ArrayList<String>();
+    System.out.println("You have built a house:");
+  }
+  /**
+   * constructor with automatic no elevator 
+   * @param name
+   * @param address
+   * @param nFloors
+   * @param hasDining
+   */
+  public House(String name, String address, int nFloors, boolean hasDining) {
+    super(name, false, address, nFloors);
+    this.hasDiningRoom = hasDining;
+    this.residents= new ArrayList<String>();
+    System.out.println("You have built a house:");
+  }
+  /**
+   * constructor with no elevator or dining hall 
+   * @param name
+   * @param address
+   * @param nFloors
+   */
+  public House(String name, String address, int nFloors) {
+    super(name, false, address, nFloors);
+    this.hasDiningRoom = false;
     this.residents= new ArrayList<String>();
     System.out.println("You have built a house:");
   }
@@ -51,8 +84,13 @@ public class House extends Building{
   public boolean isResident(String name){
     return this.residents.contains(name);
   }
+
+  public void showOptions() {
+    super.showOptions();
+    System.out.println("\n + moveIn(n) \n + moveOut(n)  \n + isResident(n) \n + hasDiningHall() \n + numResidents()");
+  }
   public static void main(String[] args) {
-    House king = new House("king", "180 Elm Street", 3, true);
+    House king = new House("king", "180 Elm Street", 3, true, true);
     System.out.println(king);
     king.moveIn("Sophia");
     king.moveIn("Isobel");
